@@ -56,6 +56,7 @@ default configuration is:
 	enable = true,
 	size = 40,
 	fade = true,
+	fader = 'cursor_end',
 	minimal_jump = 10,
 	show_jumps = true,
 	focus_gained = false,
@@ -77,6 +78,9 @@ Beacon size.
 							   *beacon-config.fade*
 fade		    bool (default:true)
 Whether to enable fading animation.
+							   *beacon-config.fader*
+fader		    string (default:'cursor_end')
+Choose different fading animation. Available value: 'cursor_end', 'cursor_line'
 						   *beacon-config.minimal_jump*
 minimal_jump	    int (default:10)
 The jump length which beacon considers significant jump.

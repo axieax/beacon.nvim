@@ -56,6 +56,32 @@ M.fade_window = function()
   end
 end
 
+local faders = {
+  cursor_end = function(opts)
+    return vim.tbl_extend('force', opts, {
+      relative = 'cursor',
+      width = math.min(config.size, vim.api.nvim_win_get_width(0) - vim.fn.wincol()),
+      col = 0,
+      row = 0,
+    })
+  end,
+
+  cursor_line = function(opts)
+    local curWin = {
+      pos = vim.api.nvim_win_get_position(0), -- {row, col}
+      width = vim.api.nvim_win_get_width(0),
+    }
+
+    return vim.tbl_extend('force', opts, {
+      relative = 'win',
+      win = 0,
+      width = math.min(config.size, curWin.width),
+      col = curWin.pos[2],
+      row = vim.fn.winline() - 1,
+    })
+  end,
+}
+
 M.highlight_position = function(is_force)
   if config.enable == false and is_force == false then
     return
@@ -76,16 +102,18 @@ M.highlight_position = function(is_force)
     return
   end
 
-  local opts = {
-    relative = 'cursor',
-    width = config.size,
+  local fader = faders[config.fader]
+  if not fader then
+    error('Invalid config.fader = ' .. config.fader)
+  end
+
+  local opts = fader({
     height = 1,
-    col = 0,
-    row = 0,
     anchor = 'NW',
     style = 'minimal',
     focusable = false,
-  }
+  })
+
   -- some plugins wipe out the buffer, so here need to create a new one
   if not vim.api.nvim_buf_is_valid(fake_buf) then
     fake_buf = vim.api.nvim_create_buf(false, true)

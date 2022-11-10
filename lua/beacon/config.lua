@@ -4,6 +4,7 @@ local default_config = {
   enable = true,
   size = 40,
   fade = true,
+  fader = 'cursor_end',
   minimal_jump = 10,
   show_jumps = true,
   focus_gained = false,

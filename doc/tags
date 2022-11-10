@@ -6,6 +6,7 @@ beacon	beacon.txt	/*beacon*
 beacon-commands	beacon.txt	/*beacon-commands*
 beacon-config.enable	beacon.txt	/*beacon-config.enable*
 beacon-config.fade	beacon.txt	/*beacon-config.fade*
+beacon-config.fader	beacon.txt	/*beacon-config.fader*
 beacon-config.focus_gained	beacon.txt	/*beacon-config.focus_gained*
 beacon-config.ignore_buffers	beacon.txt	/*beacon-config.ignore_buffers*
 beacon-config.ignore_filetypes	beacon.txt	/*beacon-config.ignore_filetypes*
