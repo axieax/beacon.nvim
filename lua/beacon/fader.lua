@@ -60,7 +60,7 @@ local faders = {
   cursor_end = function(opts)
     return vim.tbl_extend('force', opts, {
       relative = 'cursor',
-      width = math.min(config.size, vim.api.nvim_win_get_width(0) - vim.fn.wincol()),
+      width = math.max(math.min(config.size, vim.api.nvim_win_get_width(0) - vim.fn.wincol()), 1),
       col = 0,
       row = 0,
     })
@@ -75,7 +75,7 @@ local faders = {
     return vim.tbl_extend('force', opts, {
       relative = 'win',
       win = 0,
-      width = math.min(config.size, curWin.width),
+      width = math.max(math.min(config.size, curWin.width), 1),
       col = curWin.pos[2],
       row = vim.fn.winline() - 1,
     })
