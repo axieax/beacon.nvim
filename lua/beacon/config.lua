@@ -1,6 +1,6 @@
 local M = {}
 
-local default_config = {
+M.items = {
   enable = true,
   size = 40,
   fade = true,
@@ -16,7 +16,7 @@ local default_config = {
 
 M.merge_config = function(opts)
   opts = opts or {}
-  return vim.tbl_deep_extend('force', default_config, opts)
+  M.items = vim.tbl_deep_extend('force', M.items, opts)
 end
 
 return M

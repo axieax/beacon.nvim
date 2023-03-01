@@ -1,10 +1,8 @@
 local M = {}
 
-local conf_module = require('beacon.config')
+local config_module = require('beacon.config')
 local utils = require('beacon.utils')
 local fader = require('beacon.fader')
-local config = nil
-local initialized = false
 
 M.cursor_moved = function()
   fader.cursor_move()
@@ -30,25 +28,20 @@ M.beacon_toggle = function()
   fader.beacon_toggle()
 end
 
-M.setup = function(opts)
-  if initialized then
-    return
-  end
-
-  config = conf_module.merge_config(opts)
-  fader.setup(config)
+M.load = function()
+  fader.setup(config_module.items)
   utils.create_default_highlight_group()
 
   local ac = [[
         augroup BeaconHighlightMoves
             autocmd!
     ]]
-  if config.show_jumps then
+  if config_module.items.show_jumps then
     ac = ac .. [[
                 silent autocmd CursorMoved * lua require'beacon'.cursor_moved()
         ]]
   end
-  if config.focus_gained then
+  if config_module.items.focus_gained then
     ac = ac .. [[
                 silent autocmd FocusGained * lua require'beacon'.highlight_position(false)
         ]]
@@ -66,7 +59,11 @@ M.setup = function(opts)
         command! BeaconOff lua require'beacon'.beacon_off()
         command! BeaconToggle lua require'beacon'.beacon_toggle()
     ]])
-  initialized = true
+end
+
+M.setup = function(opts)
+  config_module.merge_config(opts)
+  fader.setup(config_module.items)
 end
 
 return M
